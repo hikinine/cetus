@@ -1,3 +1,4 @@
+import { seconds } from './../utils/index';
 import { CetusCycle, WarframeData } from './../interface/WarframeData';
 import { config } from './../config/index';
 import axios from "axios"
@@ -10,12 +11,12 @@ export class WarframeCachedDataService {
 
   private constructor() {
     const self = this;
-    setTimeout(() => self.fetchData(self), 0)
-    setInterval(() => self.fetchData(self), 1000 * 30)
+    setTimeout(() => self.fetchData(self), seconds(0.5))
+    setInterval(() => self.fetchData(self), seconds(30))
   }
 
   public async fetchData(self: WarframeCachedDataService) {
-    const { data } = await axios.get<WarframeData>(this.endpoint);
+    const { data } = await axios.get<WarframeData>(self.endpoint);
     self.cachedCetus = data.cetusCycle
   }
 
