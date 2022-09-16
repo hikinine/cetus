@@ -7,5 +7,3 @@ services:
     container_name: cetus
     env_file:
       - .env
-    networks:
-      service_network:
