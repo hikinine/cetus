@@ -1,4 +1,4 @@
-import { seconds } from './../utils/index';
+import { millisToMinutesAndSeconds, seconds } from './../utils/index';
 import { WarframeCachedDataService } from './WarframeCachedDataService';
 import { Client } from 'discord.js';
 import { config } from '../config';
@@ -24,15 +24,17 @@ export class DiscordClient {
     await self.client.login(config.secretKey);
     self.client.on("ready", () => {
       setTimeout(() => self.setActivity(self), seconds(1))
-      setInterval(() => self.setActivity(self), seconds(30))
+      setInterval(() => self.setActivity(self), seconds(5))
     })
   }
   private async setActivity(self: DiscordClient) {
     const { expiry, state } = self.service.cachedCetus
     if (isDefined(expiry)) {
-      const relativeTimeFromNow = dayjs(expiry).fromNow();
-      const thisState = state === "day" ? "[NIGHT] " : "[DAY] ";
-      self.client.user?.setActivity(thisState + relativeTimeFromNow, self.activity);
+      const now = new Date()
+      const expiryDate = new Date(expiry)
+      const relativeTimeFromNow = millisToMinutesAndSeconds(expiryDate.getTime() - now.getTime())
+      const thisState = state === "day" ? " to 🌚" : " to 🌞";
+      self.client.user?.setActivity(relativeTimeFromNow + thisState, self.activity);
     }
   }
 
