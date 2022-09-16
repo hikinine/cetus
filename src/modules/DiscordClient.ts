@@ -24,7 +24,7 @@ export class DiscordClient {
     await self.client.login(config.secretKey);
     self.client.on("ready", () => {
       setTimeout(() => self.setActivity(self), seconds(1))
-      setInterval(() => self.setActivity(self), seconds(5))
+      setInterval(() => self.setActivity(self), seconds(1.5))
     })
   }
   private async setActivity(self: DiscordClient) {
