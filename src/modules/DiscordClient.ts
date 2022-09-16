@@ -33,7 +33,7 @@ export class DiscordClient {
       const now = new Date()
       const expiryDate = new Date(expiry)
       const relativeTimeFromNow = millisToMinutesAndSeconds(expiryDate.getTime() - now.getTime())
-      const thisState = state === "day" ? " to 🌚" : " to 🌞";
+      const thisState = state === "day" ? " to 🌜" : " to 🌞";
       self.client.user?.setActivity(relativeTimeFromNow + thisState, self.activity);
     }
   }
