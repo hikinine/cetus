@@ -28,10 +28,11 @@ export class DiscordClient {
     })
   }
   private async setActivity(self: DiscordClient) {
-    const { expiry } = self.service.cachedCetus
+    const { expiry, state } = self.service.cachedCetus
     if (isDefined(expiry)) {
-      const relativeTimeFromNow = dayjs(expiry).fromNow()
-      self.client.user?.setActivity(relativeTimeFromNow, self.activity)
+      const relativeTimeFromNow = dayjs(expiry).fromNow();
+      const thisState = state === "day" ? "[NIGHT] " : "[DAY] ";
+      self.client.user?.setActivity(thisState + relativeTimeFromNow, self.activity);
     }
   }
 
