@@ -32,9 +32,15 @@ export class DiscordClient {
     if (isDefined(expiry)) {
       const now = new Date()
       const expiryDate = new Date(expiry)
-      const relativeTimeFromNow = millisToMinutesAndSeconds(expiryDate.getTime() - now.getTime())
+      const RelativeTimeFromNow = expiryDate.getTime() - now.getTime()
+
+
+      const parsedRelativeTimeFromNow = RelativeTimeFromNow > 0 
+        ? millisToMinutesAndSeconds(RelativeTimeFromNow)
+        : state === "day" ? "🌜🌜🌜🌜🌜" : "🌞🌞🌞🌞🌞"
+
       const thisState = state === "day" ? " to 🌜" : " to 🌞";
-      self.client.user?.setActivity(relativeTimeFromNow + thisState, self.activity);
+      self.client.user?.setActivity(parsedRelativeTimeFromNow + thisState, self.activity);
     }
   }
 
